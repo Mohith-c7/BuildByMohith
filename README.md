@@ -22,7 +22,7 @@ The portfolio is designed as a service-oriented architecture, where each section
 ## 🛠️ Technical Stack
 
 ### **Frontend & Visualization**
-- **Core**: [Next.js 14](https://nextjs.org/) (App Router), [React](https://react.dev/)
+- **Core**: [Next.js 16](https://nextjs.org/) (App Router), [React](https://react.dev/)
 - **Visuals**: [Three.js](https://threejs.org/) / [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) (3D Architecture)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
