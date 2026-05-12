@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface Notification {
   id: string;
@@ -10,6 +10,7 @@ interface Notification {
 
 interface SystemContextType {
   isChaosMode: boolean;
+  chaosLevel: number; // 0 to 1
   toggleChaosMode: () => void;
   systemHealth: number;
   showMetrics: boolean;
@@ -22,9 +23,22 @@ const SystemContext = createContext<SystemContextType | undefined>(undefined);
 
 export const SystemProvider = ({ children }: { children: ReactNode }) => {
   const [isChaosMode, setIsChaosMode] = useState(false);
+  const [chaosLevel, setChaosLevel] = useState(0);
   const [systemHealth, setSystemHealth] = useState(99.98);
   const [showMetrics, setShowMetrics] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isChaosMode) {
+      interval = setInterval(() => {
+        setChaosLevel(Math.random());
+      }, 500);
+    } else {
+      setChaosLevel(0);
+    }
+    return () => clearInterval(interval);
+  }, [isChaosMode]);
 
   const toggleChaosMode = () => {
     setIsChaosMode(!isChaosMode);
@@ -50,6 +64,7 @@ export const SystemProvider = ({ children }: { children: ReactNode }) => {
   return (
     <SystemContext.Provider value={{ 
       isChaosMode, 
+      chaosLevel,
       toggleChaosMode, 
       systemHealth,
       showMetrics,

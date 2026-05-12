@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   }
 };
 
-import { SystemProvider } from "@/context/SystemContext";
+import { SystemProvider, useSystem } from "@/context/SystemContext";
 import { TerminalCLI } from "@/components/animations/TerminalCLI";
 import { SystemOverlay } from "@/components/shared/SystemOverlay";
 import { CommandPalette } from "@/components/shared/CommandPalette";
@@ -58,7 +58,9 @@ export default function RootLayout({
     <html lang="en" className={cn("dark", "font-sans", geist.variable)}>
       <body className={`${inter.variable} ${mono.variable} font-sans antialiased bg-black text-white cursor-none`}>
         <SystemProvider>
-          {children}
+          <ChaosWrapper>
+            {children}
+          </ChaosWrapper>
           <TerminalCLI />
           <SystemOverlay />
           <CommandPalette />
@@ -70,3 +72,21 @@ export default function RootLayout({
     </html>
   );
 }
+
+const ChaosWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { isChaosMode, chaosLevel } = useSystem();
+  
+  return (
+    <motion.div
+      animate={isChaosMode ? {
+        x: [0, (chaosLevel - 0.5) * 4, 0],
+        y: [0, (chaosLevel - 0.5) * 4, 0],
+        filter: chaosLevel > 0.8 ? ["none", "hue-rotate(90deg) grayscale(1)", "none"] : "none"
+      } : {}}
+      transition={{ duration: 0.1, repeat: isChaosMode ? Infinity : 0 }}
+      className="min-h-screen flex flex-col"
+    >
+      {children}
+    </motion.div>
+  );
+};

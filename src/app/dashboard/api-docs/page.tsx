@@ -14,6 +14,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSystem } from '@/context/SystemContext';
 
 const ENDPOINTS = [
   {
@@ -60,16 +61,28 @@ const ENDPOINTS = [
 ];
 
 export default function ApiDocsPage() {
-  const [selectedEndpoint, setSelectedEndpoint] = useState(ENDPOINTS[0]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showResponse, setShowResponse] = useState(false);
+  const { isChaosMode, chaosLevel, addNotification } = useSystem();
+  const [requestCount, setRequestCount] = useState(0);
 
   const handleTest = () => {
+    if (requestCount >= 5 && !isChaosMode) {
+      addNotification("RATE_LIMIT_EXCEEDED: 429 Too Many Requests", "warning");
+      return;
+    }
+
     setIsLoading(true);
     setShowResponse(false);
+    
     setTimeout(() => {
       setIsLoading(false);
+      
+      if (isChaosMode && chaosLevel > 0.6) {
+        addNotification("SERVICE_UNAVAILABLE: 503 Backend Fetch Failed", "error");
+        return;
+      }
+
       setShowResponse(true);
+      setRequestCount(prev => prev + 1);
     }, 1000);
   };
 

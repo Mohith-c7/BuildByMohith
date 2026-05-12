@@ -23,6 +23,20 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-emerald-500 font-mono flex flex-col items-center justify-center relative overflow-hidden">
       <Scene />
+      <SystemLogs />
+      
+      {/* Health Grid Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(#10b98111_1px,transparent_1px)] bg-[size:30px_30px] opacity-30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none" />
+      
+      {/* Scanline Effect */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div 
+          animate={{ y: ["0%", "1000%"] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="w-full h-1 bg-emerald-500/5 blur-sm"
+        />
+      </div>
       
       <div className="w-full max-w-2xl z-10 p-4">
         <AnimatePresence mode="wait">
@@ -107,6 +121,13 @@ export default function Home() {
                     <button className="group relative px-12 py-4 bg-transparent text-emerald-400 font-bold uppercase tracking-widest text-sm overflow-hidden border border-emerald-500/30 hover:text-black transition-colors duration-300">
                       <span className="relative z-10">Access System Protocol</span>
                       <div className="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      
+                      {/* Scanning Bar */}
+                      <motion.div 
+                        animate={{ top: ["-10%", "110%"] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                        className="absolute left-0 right-0 h-0.5 bg-emerald-400 shadow-[0_0_10px_#10b981] z-20 opacity-30 pointer-events-none"
+                      />
                     </button>
                   </Link>
                 </div>
