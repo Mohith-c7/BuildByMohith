@@ -13,6 +13,23 @@ export const SystemOverlay = () => {
     <>
       {/* Floating Monitor Widget */}
       <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-4">
+        {/* Keyboard Hints */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-black/80 border border-emerald-900/30 rounded-lg p-3 flex gap-4 backdrop-blur-md"
+        >
+          <div className="flex items-center gap-2">
+            <kbd className="px-1.5 py-0.5 bg-emerald-900/40 border border-emerald-500/20 rounded text-[9px] text-emerald-400 font-mono">Ctrl+K</kbd>
+            <span className="text-[9px] text-emerald-500/40 uppercase tracking-widest">Search</span>
+          </div>
+          <div className="w-px h-3 bg-emerald-900/30 self-center" />
+          <div className="flex items-center gap-2">
+            <kbd className="px-1.5 py-0.5 bg-emerald-900/40 border border-emerald-500/20 rounded text-[9px] text-emerald-400 font-mono">Ctrl+~</kbd>
+            <span className="text-[9px] text-emerald-500/40 uppercase tracking-widest">CLI</span>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}

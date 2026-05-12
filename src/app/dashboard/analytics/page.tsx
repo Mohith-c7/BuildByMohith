@@ -174,6 +174,39 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </div>
+      <div className="bg-black/40 border border-emerald-900/30 rounded-xl p-6">
+        <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2 mb-8">
+          <Activity className="w-4 h-4 text-emerald-500" />
+          Live System Logs
+        </h3>
+        
+        <div className="bg-black rounded-xl border border-emerald-900/20 p-6 font-mono text-[11px] h-[200px] overflow-hidden relative">
+          <div className="space-y-2">
+            {[
+              "INFO: Node-01 handshake initiated",
+              "AUTH: User session established [0x8dc6]",
+              "METRIC: Latency spike detected (+4ms)",
+              "SYS: Database replica synchronization complete",
+              "WAF: Blocked potential SQLi from 142.250.x.x",
+              "INFO: Analytics cache refreshed",
+              "DEPLOY: Hot-reload service-profile v4.2.1",
+              "HEARTBEAT: Service-Mesh healthy",
+            ].map((log, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="flex gap-4"
+              >
+                <span className="text-emerald-900">{new Date().toLocaleTimeString()}</span>
+                <span className="text-emerald-500/80">{log}</span>
+              </motion.div>
+            ))}
+          </div>
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+        </div>
+      </div>
     </div>
   );
 }

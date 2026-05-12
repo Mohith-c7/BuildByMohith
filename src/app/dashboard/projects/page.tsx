@@ -1,10 +1,11 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Github, ExternalLink, Star, GitBranch, AlertCircle, Package } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MetricOverlay } from '@/components/shared/MetricOverlay';
+import { Modal } from '@/components/shared/Modal';
 
 const PROJECTS = [
   {
@@ -13,7 +14,8 @@ const PROJECTS = [
     tech: ["Node.js", "Socket.io", "Redis", "Docker"],
     stats: { stars: 234, forks: 45, issues: 12 },
     status: "PROD",
-    links: { github: "#", demo: "#" }
+    links: { github: "#", demo: "#" },
+    architecture: "Service Mesh with Redis Pub/Sub for state synchronization."
   },
   {
     name: "api-rate-limiter",
@@ -21,7 +23,8 @@ const PROJECTS = [
     tech: ["Go", "Redis", "gRPC"],
     stats: { stars: 89, forks: 12, issues: 3 },
     status: "BETA",
-    links: { github: "#" }
+    links: { github: "#" },
+    architecture: "Sliding window log algorithm implemented in Go with Redis atomicity."
   },
   {
     name: "sec-auth-service",
@@ -29,7 +32,8 @@ const PROJECTS = [
     tech: ["Python", "OAuth2", "PostgreSQL"],
     stats: { stars: 156, forks: 28, issues: 5 },
     status: "STABLE",
-    links: { github: "#", demo: "#" }
+    links: { github: "#", demo: "#" },
+    architecture: "Stateful JWT with automatic key rotation and biometric handshake."
   },
   {
     name: "infra-monitor",
@@ -37,11 +41,13 @@ const PROJECTS = [
     tech: ["Kubernetes", "Prometheus", "Grafana"],
     stats: { stars: 312, forks: 56, issues: 8 },
     status: "PROD",
-    links: { github: "#" }
+    links: { github: "#" },
+    architecture: "Prometheus exporter with custom metrics scrape layer and Slack alerts."
   }
 ];
 
 export default function ProjectsPage() {
+  const [selectedProject, setSelectedProject] = useState<typeof PROJECTS[0] | null>(null);
   return (
     <div className="space-y-12">
       <div>
@@ -56,7 +62,8 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.1 }}
-              className="group bg-black/40 border border-emerald-900/30 rounded-2xl p-6 hover:border-emerald-500/40 transition-all flex flex-col h-full"
+              onClick={() => setSelectedProject(project)}
+              className="group bg-black/40 border border-emerald-900/30 rounded-2xl p-6 hover:border-emerald-500/40 transition-all flex flex-col h-full cursor-pointer active:scale-[0.98]"
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -118,6 +125,51 @@ export default function ProjectsPage() {
           </MetricOverlay>
         ))}
       </div>
+
+      <Modal
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        title={selectedProject?.name || ""}
+        subtitle="Repository Specifications // v1.0.0"
+      >
+        {selectedProject && (
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h4 className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest border-b border-emerald-900/30 pb-2">Technical Architecture</h4>
+              <div className="bg-emerald-500/5 border border-emerald-500/20 p-6 rounded-xl">
+                <p className="text-sm text-emerald-100/80 font-mono leading-relaxed italic">
+                  "{selectedProject.architecture}"
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { label: "Stars", value: selectedProject.stats.stars, icon: Star },
+                { label: "Forks", value: selectedProject.stats.forks, icon: GitBranch },
+                { label: "Issues", value: selectedProject.stats.issues, icon: AlertCircle },
+              ].map((stat, i) => (
+                <div key={i} className="p-4 bg-black border border-emerald-900/30 rounded-xl text-center">
+                  <stat.icon className="w-4 h-4 text-emerald-500/40 mx-auto mb-2" />
+                  <div className="text-[10px] text-emerald-500/30 uppercase tracking-widest mb-1">{stat.label}</div>
+                  <div className="text-lg font-bold text-white font-mono">{stat.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest border-b border-emerald-900/30 pb-2">Integrated Stack</h4>
+              <div className="flex flex-wrap gap-2">
+                {selectedProject.tech.map((t, j) => (
+                  <span key={j} className="text-[10px] px-3 py-1 bg-emerald-900/30 border border-emerald-500/10 text-emerald-400 rounded-full font-mono">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

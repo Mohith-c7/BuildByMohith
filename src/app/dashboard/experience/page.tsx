@@ -1,9 +1,10 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Rocket, CheckCircle2, AlertCircle, Clock, Zap, ChevronRight } from 'lucide-react';
+import { Rocket, CheckCircle2, AlertCircle, Clock, Zap, ChevronRight, Database, FileCode } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Modal } from '@/components/shared/Modal';
 
 const EXPERIENCE = [
   {
@@ -22,7 +23,13 @@ const EXPERIENCE = [
       "Optimized database queries resulting in 30% faster response times.",
       "Implemented automated CI/CD pipelines for 3 core services."
     ],
-    stack: ["Go", "Kubernetes", "PostgreSQL", "gRPC"]
+    stack: ["Go", "Kubernetes", "PostgreSQL", "gRPC"],
+    specs: {
+      architecture: "gRPC Microservices Mesh",
+      database: "PostgreSQL with Sharding",
+      security: "JWT + OAuth2 + mTLS",
+      monitoring: "Prometheus & Grafana"
+    }
   },
   {
     company: "CloudScale Systems",
@@ -40,7 +47,13 @@ const EXPERIENCE = [
       "Refactored legacy monolith into modular components.",
       "Ensured 100% test coverage for critical payment processing modules."
     ],
-    stack: ["Node.js", "React", "MongoDB", "Redis"]
+    stack: ["Node.js", "React", "MongoDB", "Redis"],
+    specs: {
+      architecture: "Monolith-to-Microservices",
+      database: "MongoDB with Redis Caching",
+      security: "Role-Based Access Control",
+      monitoring: "Custom WebSocket Telemetry"
+    }
   },
   {
     company: "DataDynamics Corp",
@@ -57,13 +70,19 @@ const EXPERIENCE = [
       "Implemented a centralized logging system with ELK stack.",
       "Collaborated on designing a scalable schema for multi-tenant data storage."
     ],
-    stack: ["Python", "Docker", "Elasticsearch", "SQL"]
+    stack: ["Python", "Docker", "Elasticsearch", "SQL"],
+    specs: {
+      architecture: "Data Ingestion Pipeline",
+      database: "Elasticsearch + SQL",
+      security: "Encrypted Data at Rest",
+      monitoring: "ELK Stack Dashboard"
+    }
   }
 ];
 
-import { Database } from 'lucide-react'; // Fix for missing import in mapping
-
 export default function ExperiencePage() {
+  const [selectedExp, setSelectedExp] = useState<typeof EXPERIENCE[0] | null>(null);
+
   return (
     <div className="space-y-12">
       <div className="flex items-center justify-between">
@@ -150,19 +169,68 @@ export default function ExperiencePage() {
                   ))}
                 </div>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 pt-6 border-t border-emerald-900/20">
-                  {exp.stack.map((t, j) => (
-                    <span key={j} className="text-[10px] px-3 py-1 bg-emerald-900/30 border border-emerald-500/10 text-emerald-400/80 rounded-full">
-                      {t}
-                    </span>
-                  ))}
+                {/* Tech Stack & Action */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-6 border-t border-emerald-900/20">
+                  <div className="flex flex-wrap gap-2">
+                    {exp.stack.map((t, j) => (
+                      <span key={j} className="text-[10px] px-3 py-1 bg-emerald-900/30 border border-emerald-500/10 text-emerald-400/80 rounded-full">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <button 
+                    onClick={() => setSelectedExp(exp)}
+                    className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors group/btn"
+                  >
+                    View System Specs
+                    <ChevronRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>
           </motion.div>
         ))}
       </div>
+
+      <Modal
+        isOpen={!!selectedExp}
+        onClose={() => setSelectedExp(null)}
+        title={selectedExp?.company || ""}
+        subtitle={`System Specifications // ${selectedExp?.version}`}
+      >
+        {selectedExp && (
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                { label: "Core Architecture", value: selectedExp.specs.architecture, icon: FileCode },
+                { label: "Data Persistence", value: selectedExp.specs.database, icon: Database },
+                { label: "Security Protocol", value: selectedExp.specs.security, icon: Rocket },
+                { label: "Telemetry & Logs", value: selectedExp.specs.monitoring, icon: Zap },
+              ].map((spec, i) => (
+                <div key={i} className="p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl">
+                  <div className="flex items-center gap-3 mb-2">
+                    <spec.icon className="w-4 h-4 text-emerald-500/60" />
+                    <span className="text-[10px] text-emerald-500/40 uppercase tracking-widest">{spec.label}</span>
+                  </div>
+                  <div className="text-sm font-bold text-white font-mono">{spec.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest border-b border-emerald-900/30 pb-2">Technical Implementation Logs</h4>
+              <div className="bg-black p-6 rounded-xl border border-emerald-900/20 font-mono text-[11px] text-emerald-100/60 leading-relaxed">
+                {selectedExp.highlights.map((h, k) => (
+                  <div key={k} className="mb-2 last:mb-0">
+                    <span className="text-emerald-500 mr-2">[STABLE]</span>
+                    {h}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
