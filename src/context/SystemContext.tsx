@@ -6,6 +6,8 @@ interface SystemContextType {
   isChaosMode: boolean;
   toggleChaosMode: () => void;
   systemHealth: number;
+  showMetrics: boolean;
+  toggleShowMetrics: () => void;
 }
 
 const SystemContext = createContext<SystemContextType | undefined>(undefined);
@@ -13,6 +15,7 @@ const SystemContext = createContext<SystemContextType | undefined>(undefined);
 export const SystemProvider = ({ children }: { children: ReactNode }) => {
   const [isChaosMode, setIsChaosMode] = useState(false);
   const [systemHealth, setSystemHealth] = useState(99.98);
+  const [showMetrics, setShowMetrics] = useState(false);
 
   const toggleChaosMode = () => {
     setIsChaosMode(!isChaosMode);
@@ -23,8 +26,16 @@ export const SystemProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const toggleShowMetrics = () => setShowMetrics(!showMetrics);
+
   return (
-    <SystemContext.Provider value={{ isChaosMode, toggleChaosMode, systemHealth }}>
+    <SystemContext.Provider value={{ 
+      isChaosMode, 
+      toggleChaosMode, 
+      systemHealth,
+      showMetrics,
+      toggleShowMetrics
+    }}>
       {children}
     </SystemContext.Provider>
   );
