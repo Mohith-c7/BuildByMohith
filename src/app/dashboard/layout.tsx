@@ -15,7 +15,8 @@ import {
   Settings,
   Activity,
   Package,
-  History
+  History,
+  Shield
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -26,8 +27,12 @@ const NAV_ITEMS = [
   { name: 'Repositories', path: '/dashboard/projects', icon: Package },
   { name: 'Version Hub', path: '/dashboard/versions', icon: History },
   { name: 'Telemetry', path: '/dashboard/analytics', icon: LineChart },
+  { name: 'Security Sentinel', path: '/dashboard/security', icon: Shield },
+  { name: 'API Protocol', path: '/dashboard/api-docs', icon: TerminalIcon },
   { name: 'Contact Protocol', path: '/dashboard/contact', icon: TerminalIcon },
 ];
+
+import { Scene } from '@/components/canvas/Scene';
 
 export default function DashboardLayout({
   children,
@@ -38,7 +43,7 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-black flex overflow-hidden">
-      {/* Sidebar */}
+      <Scene />
       <aside className="w-64 border-r border-emerald-900/30 bg-black/50 backdrop-blur-xl flex flex-col z-20">
         <div className="p-6 border-b border-emerald-900/30">
           <Link href="/" className="flex items-center gap-3 group">

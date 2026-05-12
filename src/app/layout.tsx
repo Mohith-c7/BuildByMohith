@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 import { SystemProvider } from "@/context/SystemContext";
 import { TerminalCLI } from "@/components/animations/TerminalCLI";
 import { SystemOverlay } from "@/components/shared/SystemOverlay";
+import { CommandPalette } from "@/components/shared/CommandPalette";
 
 export default function RootLayout({
   children,
@@ -36,6 +37,7 @@ export default function RootLayout({
           {children}
           <TerminalCLI />
           <SystemOverlay />
+          <CommandPalette />
         </SystemProvider>
       </body>
     </html>
