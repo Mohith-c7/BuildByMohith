@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal as TerminalIcon, X } from 'lucide-react';
 
 const COMMANDS: Record<string, string> = {
-  help: 'Available commands: help, ls, whoami, clear, exit, system-status',
-  ls: 'projects/  experience/  skills/  analytics/',
+  help: 'Available commands: help, ls, whoami, clear, exit, system-status, rollback',
+  ls: 'projects/  experience/  skills/  analytics/  versions/',
   whoami: 'SYSTEM: MOHITH_ADMIN v4.0.0-STABLE | Role: System Architect',
   'system-status': 'ALL SERVICES HEALTHY. Uptime: 99.98%. Nodes active: 06.',
+  rollback: 'Navigate to /dashboard/versions to initialize system state rollback.',
 };
 
 export const TerminalCLI = () => {
