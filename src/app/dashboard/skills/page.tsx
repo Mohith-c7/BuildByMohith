@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, Server, Database, Globe, Shield, Terminal as TerminalIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { MetricOverlay } from '@/components/shared/MetricOverlay';
 
 const SKILL_CATEGORIES = [
   { id: 'all', name: 'All Services', icon: Globe },
@@ -84,49 +85,50 @@ export default function SkillsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <AnimatePresence mode="popLayout">
           {filteredSkills.map((skill, i) => (
-            <motion.div
-              layout
-              key={skill.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.2 }}
-              className="bg-black/40 border border-emerald-900/30 p-5 rounded-lg group hover:border-emerald-500/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.05)] transition-all"
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div className="p-2 bg-emerald-500/5 rounded-lg border border-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
-                  {SKILL_CATEGORIES.find(c => c.id === skill.category)?.icon && (
-                    React.createElement(SKILL_CATEGORIES.find(c => c.id === skill.category)!.icon, {
-                      className: "w-5 h-5 text-emerald-500"
-                    })
-                  )}
+            <MetricOverlay key={skill.name} label={skill.name.toUpperCase()}>
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="bg-black/40 border border-emerald-900/30 p-5 rounded-lg group hover:border-emerald-500/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.05)] transition-all h-full"
+              >
+                <div className="flex items-start justify-between mb-6">
+                  <div className="p-2 bg-emerald-500/5 rounded-lg border border-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
+                    {SKILL_CATEGORIES.find(c => c.id === skill.category)?.icon && (
+                      React.createElement(SKILL_CATEGORIES.find(c => c.id === skill.category)!.icon, {
+                        className: "w-5 h-5 text-emerald-500"
+                      })
+                    )}
+                  </div>
+                  <div className={cn(
+                    "text-[9px] font-bold uppercase px-2 py-1 rounded tracking-tighter",
+                    skill.health === 'expert' ? "bg-emerald-500/20 text-emerald-400" :
+                    skill.health === 'advanced' ? "bg-blue-500/20 text-blue-400" :
+                    "bg-amber-500/20 text-amber-400"
+                  )}>
+                    {skill.health}
+                  </div>
                 </div>
-                <div className={cn(
-                  "text-[9px] font-bold uppercase px-2 py-1 rounded tracking-tighter",
-                  skill.health === 'expert' ? "bg-emerald-500/20 text-emerald-400" :
-                  skill.health === 'advanced' ? "bg-blue-500/20 text-blue-400" :
-                  "bg-amber-500/20 text-amber-400"
-                )}>
-                  {skill.health}
-                </div>
-              </div>
 
-              <h3 className="text-lg font-bold text-white mb-1">{skill.name}</h3>
-              <div className="text-[10px] text-emerald-500/40 font-mono mb-6 uppercase tracking-widest">
-                ENDPOINT_VERSION: {skill.version}
-              </div>
+                <h3 className="text-lg font-bold text-white mb-1">{skill.name}</h3>
+                <div className="text-[10px] text-emerald-500/40 font-mono mb-6 uppercase tracking-widest">
+                  ENDPOINT_VERSION: {skill.version}
+                </div>
 
-              <div className="space-y-3 pt-4 border-t border-emerald-900/20">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-emerald-500/30 uppercase">Latency</span>
-                  <span className="text-xs font-mono text-emerald-400">{skill.latency}</span>
+                <div className="space-y-3 pt-4 border-t border-emerald-900/20">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-emerald-500/30 uppercase">Latency</span>
+                    <span className="text-xs font-mono text-emerald-400">{skill.latency}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-emerald-500/30 uppercase">Deployment Count</span>
+                    <span className="text-xs font-mono text-emerald-400">{skill.projects} Repos</span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-emerald-500/30 uppercase">Deployment Count</span>
-                  <span className="text-xs font-mono text-emerald-400">{skill.projects} Repos</span>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </MetricOverlay>
           ))}
         </AnimatePresence>
       </div>

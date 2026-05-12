@@ -7,12 +7,12 @@ import { Activity, AlertTriangle, RefreshCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const SystemOverlay = () => {
-  const { isChaosMode, toggleChaosMode, systemHealth } = useSystem();
+  const { isChaosMode, toggleChaosMode, systemHealth, showMetrics, toggleShowMetrics } = useSystem();
 
   return (
     <>
       {/* Floating Monitor Widget */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-4">
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -42,21 +42,37 @@ export const SystemOverlay = () => {
 
             <div className="w-px h-10 bg-emerald-900/30 mx-2" />
 
-            <button
-              onClick={toggleChaosMode}
-              className={cn(
-                "p-3 rounded-lg border transition-all active:scale-95 group",
-                isChaosMode
-                  ? "bg-red-500/20 border-red-500/40 text-red-400 hover:bg-red-500/30"
-                  : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
-              )}
-            >
-              {isChaosMode ? (
-                <RefreshCcw className="w-5 h-5 animate-spin" />
-              ) : (
-                <AlertTriangle className="w-5 h-5 group-hover:animate-bounce" />
-              )}
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={toggleShowMetrics}
+                title="Toggle Performance Metrics"
+                className={cn(
+                  "p-3 rounded-lg border transition-all active:scale-95 group",
+                  showMetrics
+                    ? "bg-emerald-500 text-black border-emerald-400"
+                    : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
+                )}
+              >
+                <Activity className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={toggleChaosMode}
+                title="Toggle Chaos Protocol"
+                className={cn(
+                  "p-3 rounded-lg border transition-all active:scale-95 group",
+                  isChaosMode
+                    ? "bg-red-500/20 border-red-500/40 text-red-400 hover:bg-red-500/30"
+                    : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
+                )}
+              >
+                {isChaosMode ? (
+                  <RefreshCcw className="w-5 h-5 animate-spin" />
+                ) : (
+                  <AlertTriangle className="w-5 h-5 group-hover:animate-bounce" />
+                )}
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>
