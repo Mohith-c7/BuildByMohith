@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   description: "A production-grade distributed system showcasing career evolution and technical expertise.",
 };
 
+import { TerminalCLI } from "@/components/animations/TerminalCLI";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,6 +31,7 @@ export default function RootLayout({
     <html lang="en" className={cn("dark", "font-sans", geist.variable)}>
       <body className={`${inter.variable} ${mono.variable} font-sans antialiased bg-black text-white`}>
         {children}
+        <TerminalCLI />
       </body>
     </html>
   );
