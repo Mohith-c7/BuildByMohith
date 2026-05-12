@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSystem } from '@/context/SystemContext';
 import { Cpu, Zap, Database } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface MetricOverlayProps {
   children: React.ReactNode;

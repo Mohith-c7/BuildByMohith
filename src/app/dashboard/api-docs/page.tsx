@@ -62,6 +62,9 @@ const ENDPOINTS = [
 
 export default function ApiDocsPage() {
   const { isChaosMode, chaosLevel, addNotification } = useSystem();
+  const [selectedEndpoint, setSelectedEndpoint] = useState(ENDPOINTS[0]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showResponse, setShowResponse] = useState(false);
   const [requestCount, setRequestCount] = useState(0);
 
   const handleTest = () => {

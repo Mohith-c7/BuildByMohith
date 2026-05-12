@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SYSTEM_VERSION } from '@/lib/constants';
 import { Terminal } from '@/components/animations/Terminal';
 import { Scene } from '@/components/canvas/Scene';
+import { SystemLogs } from '@/components/animations/SystemLogs';
 
 export default function Home() {
   const [isBooted, setIsBooted] = useState(false);
