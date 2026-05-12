@@ -64,6 +64,7 @@ export default function DashboardLayout({
               <Link
                 key={item.path}
                 href={item.path}
+                aria-label={`Navigate to ${item.name}`}
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-md transition-all group relative",
                   isActive 
@@ -129,7 +130,10 @@ export default function DashboardLayout({
               <span className="text-[10px] text-emerald-500 uppercase tracking-[0.2em]">Network: Optimal</span>
             </div>
             <div className="w-px h-4 bg-emerald-900/30" />
-            <button className="text-emerald-500/40 hover:text-emerald-400 transition-colors">
+            <button 
+              aria-label="Open System Settings"
+              className="text-emerald-500/40 hover:text-emerald-400 transition-colors"
+            >
               <Settings className="w-5 h-5" />
             </button>
           </div>

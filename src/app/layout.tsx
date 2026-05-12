@@ -16,14 +16,38 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mohith | Microservices Portfolio System",
-  description: "A production-grade distributed system showcasing career evolution and technical expertise.",
+  title: {
+    default: "Mohith | System Architect Portfolio",
+    template: "%s | Portfolio_OS"
+  },
+  description: "A production-grade distributed system showcasing career evolution and technical expertise. Built with Next.js, Three.js, and Framer Motion.",
+  keywords: ["System Architect", "Backend Developer", "Microservices", "Distributed Systems", "Full Stack"],
+  authors: [{ name: "Mohith" }],
+  creator: "Mohith",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://buildbymohith.in",
+    siteName: "Portfolio_OS",
+    title: "Mohith | System Architect",
+    description: "Distributed systems and high-performance backend architecture.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Portfolio OS" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mohith | System Architect",
+    description: "Distributed systems and high-performance backend architecture.",
+    images: ["/og-image.png"]
+  }
 };
 
 import { SystemProvider } from "@/context/SystemContext";
 import { TerminalCLI } from "@/components/animations/TerminalCLI";
 import { SystemOverlay } from "@/components/shared/SystemOverlay";
 import { CommandPalette } from "@/components/shared/CommandPalette";
+import { CustomCursor } from "@/components/shared/CustomCursor";
+import { Soundscape } from "@/components/shared/Soundscape";
+import { SystemNotifications } from "@/components/shared/SystemNotifications";
 
 export default function RootLayout({
   children,
@@ -32,12 +56,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("dark", "font-sans", geist.variable)}>
-      <body className={`${inter.variable} ${mono.variable} font-sans antialiased bg-black text-white`}>
+      <body className={`${inter.variable} ${mono.variable} font-sans antialiased bg-black text-white cursor-none`}>
         <SystemProvider>
           {children}
           <TerminalCLI />
           <SystemOverlay />
           <CommandPalette />
+          <CustomCursor />
+          <Soundscape />
+          <SystemNotifications />
         </SystemProvider>
       </body>
     </html>

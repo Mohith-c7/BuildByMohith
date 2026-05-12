@@ -453,10 +453,14 @@ Actual Swagger/OpenAPI docs for your portfolio API
 
 **Backend (Actual Microservices)**:
 - **API Gateway**: Cloudflare Workers / Vercel Edge Functions
-- **Profile Service**: Serverless function (Node.js)
-- **Projects Service**: Serverless function with DB connection
-- **Experience Service**: Serverless function
-- **Analytics Service**: Real-time tracking with WebSocket
+- [x] **Global Search (Command Palette)**: Ctrl + K quick access hub.
+- [x] **Interactive 3D Mesh**: Real-time data pulses and HUD labels.
+- [x] **OS Soundscape**: Synthesized UI audio feedback.
+- [x] **System Reticle**: Custom high-tech cursor.
+- [x] **API Protocol Docs**: Interactive documentation playground.
+- [x] **Security Sentinel**: Live threat detection dashboard.
+- [x] **SEO & Metadata**: Full OpenGraph and Twitter integration.
+- [ ] **Accessibility Audit**: Final ARIA label pass.
 
 **Database**:
 - **PostgreSQL** (Neon/Supabase) - Main data
