@@ -13,7 +13,8 @@ import {
   LineChart, 
   Terminal as TerminalIcon,
   Settings,
-  Activity
+  Activity,
+  Package
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -21,7 +22,9 @@ const NAV_ITEMS = [
   { name: 'Architecture', path: '/dashboard/about', icon: User },
   { name: 'Service Catalog', path: '/dashboard/skills', icon: Code2 },
   { name: 'Deployments', path: '/dashboard/experience', icon: Briefcase },
+  { name: 'Repositories', path: '/dashboard/projects', icon: Package },
   { name: 'Telemetry', path: '/dashboard/analytics', icon: LineChart },
+  { name: 'Contact Protocol', path: '/dashboard/contact', icon: TerminalIcon },
 ];
 
 export default function DashboardLayout({
