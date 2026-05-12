@@ -20,7 +20,9 @@ export const metadata: Metadata = {
   description: "A production-grade distributed system showcasing career evolution and technical expertise.",
 };
 
+import { SystemProvider } from "@/context/SystemContext";
 import { TerminalCLI } from "@/components/animations/TerminalCLI";
+import { SystemOverlay } from "@/components/shared/SystemOverlay";
 
 export default function RootLayout({
   children,
@@ -30,8 +32,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("dark", "font-sans", geist.variable)}>
       <body className={`${inter.variable} ${mono.variable} font-sans antialiased bg-black text-white`}>
-        {children}
-        <TerminalCLI />
+        <SystemProvider>
+          {children}
+          <TerminalCLI />
+          <SystemOverlay />
+        </SystemProvider>
       </body>
     </html>
   );
