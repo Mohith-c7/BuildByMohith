@@ -5,9 +5,15 @@ import { motion } from "framer-motion";
 
 interface TerminalProps {
   lines: string[];
+  onComplete?: () => void;
+  typingSpeed?: number;
 }
 
-export const Terminal: React.FC<TerminalProps> = ({ lines }) => {
+export const Terminal: React.FC<TerminalProps> = ({ 
+  lines, 
+  onComplete, 
+  typingSpeed = 100 
+}) => {
   const [visibleLines, setVisibleLines] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -16,10 +22,12 @@ export const Terminal: React.FC<TerminalProps> = ({ lines }) => {
       const timer = setTimeout(() => {
         setVisibleLines((prev) => [...prev, lines[currentIndex]]);
         setCurrentIndex((prev) => prev + 1);
-      }, 100);
+      }, typingSpeed);
       return () => clearTimeout(timer);
+    } else if (currentIndex === lines.length && onComplete) {
+      onComplete();
     }
-  }, [currentIndex, lines]);
+  }, [currentIndex, lines, onComplete, typingSpeed]);
 
   return (
     <div className="font-mono text-xs sm:text-sm bg-black p-4 rounded border border-emerald-900/30 overflow-hidden">
