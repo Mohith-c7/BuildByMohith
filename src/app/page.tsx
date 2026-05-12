@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SYSTEM_VERSION } from '@/lib/constants';
 import { Terminal } from '@/components/animations/Terminal';
@@ -102,10 +103,12 @@ export default function Home() {
                 </p>
 
                 <div className="mt-12">
-                  <button className="group relative px-12 py-4 bg-transparent text-emerald-400 font-bold uppercase tracking-widest text-sm overflow-hidden border border-emerald-500/30 hover:text-black transition-colors duration-300">
-                    <span className="relative z-10">Access System Protocol</span>
-                    <div className="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                  </button>
+                  <Link href="/dashboard">
+                    <button className="group relative px-12 py-4 bg-transparent text-emerald-400 font-bold uppercase tracking-widest text-sm overflow-hidden border border-emerald-500/30 hover:text-black transition-colors duration-300">
+                      <span className="relative z-10">Access System Protocol</span>
+                      <div className="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    </button>
+                  </Link>
                 </div>
               </motion.div>
             </motion.div>
